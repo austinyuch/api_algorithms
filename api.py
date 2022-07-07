@@ -27,7 +27,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-@app.get("/api/")
+@app.get("/")
 def read_api_root():    
     return cfg.dic_api
 
@@ -95,7 +95,7 @@ def get_pyramid_geometric(
                                         fltOrderAmountGeometicParam, 
                                         flt_起始單位數=fltOrderAmountInit)
         return dic_ret 
-        
+
     except Exception as e:
         log.error(e)
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=e)
