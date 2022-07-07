@@ -1,9 +1,8 @@
 # API algorithms
 
-Call api, and get result. #
+Call api, and get result. <br>
 
-For api doc, refer to [this_url_not_ready](https#)
-
+For api doc, refer to [https://apialgorithms.yuehchengchang.repl.co/docs#/](https://apialgorithms.yuehchengchang.repl.co/docs#/) <br>
 # Changelog
 
 ## 20220707
