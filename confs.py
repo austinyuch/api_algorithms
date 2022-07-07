@@ -17,5 +17,4 @@ lst_origins=["*"]
 from pathlib import Path
 PATH_PRJ = Path(__file__).resolve().parents[0]
 PATH_LOG_FOLDER = PATH_PRJ.joinpath("logs")
-PATH_LOG_FOLDER = Path()
 LOG_BACKUP_COUNT = 14
