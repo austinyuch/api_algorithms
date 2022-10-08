@@ -35,8 +35,12 @@ def etl_percentage(dic_金字塔下單資料:dict,flt_一組金字塔的加總�
     
     dic_金字塔下單資料_ret = copy.deepcopy(dic_金字塔下單資料)
     dic_金字塔下單資料_ret["總金額"] = flt_一組金字塔的加總金額
+    flt_累計百分比 = 0
     for key,value in dic_金字塔下單資料.items():        
         dic_金字塔下單資料_ret[key]["百分比"]= (dic_金字塔下單資料_ret[key]["金額"]/dic_金字塔下單資料_ret["總金額"])*100
+        flt_累計百分比 += dic_金字塔下單資料_ret[key]["百分比"]
+        dic_金字塔下單資料_ret[key]["累計百分比"]= flt_累計百分比
+
 
     return dic_金字塔下單資料_ret
 

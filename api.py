@@ -43,12 +43,14 @@ def get_pyramid_arithmetic(
                 )->dict:    
     """
     等差金字塔 <br>
-    :param fltBudget:下單總預算 <br>
+    :param fltBudget:(下單)總預算 <br>
     :param fltPriceInit:起始價格 <br>
     :param fltPriceFinal:終止價格 <br>
     :param intTransactionTimes:交易次數 <br>
     :param fltIncrementAmountMinimum:最小增量 <br>
-    :param fltOrderAmountArithmeticParam:等差增量算式參數, e.g. 1 <br>
+    :param fltOrderAmountArithmeticParam: 下單數量等差參數, <br>
+      金字塔放大倍數 = 總預算 / dic_單位等差金字塔下單資料["總金額"] <br>
+      本階單位數 = (起始單位數 + (下單數量等差參數 * i) ) * 金字塔放大倍數 e.g. 1 <br>
     :param fltOrderAmountInit=1.0:起始單位數 <br>
     :return: e.g.
     {
@@ -86,13 +88,13 @@ def get_pyramid_arithmetic(
         }
     """
     try:
-        dic_ret = algo_pyramid.get買入等差金字塔(fltBudget,
-                                        fltPriceInit, 
-                                        fltPriceFinal, 
-                                        intTransactionTimes, 
-                                        fltIncrementAmountMinimum, 
-                                        fltOrderAmountArithmeticParam, 
-                                        flt_起始單位數=fltOrderAmountInit)
+        dic_ret = algo_pyramid.get買入等差金字塔(fltBudget,#flt_總預算
+                                        fltPriceInit, #flt_起始價格
+                                        fltPriceFinal, #flt最終價格
+                                        intTransactionTimes, #int_交易次數
+                                        fltIncrementAmountMinimum, #flt_最小增加數量
+                                        fltOrderAmountArithmeticParam,  #flt_下單數量等差參數
+                                        flt_起始單位數=fltOrderAmountInit)#flt_起始單位數
         return dic_ret
     except Exception as e:
         log.error(e)
