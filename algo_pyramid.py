@@ -53,17 +53,21 @@ def etl_percentage(dic_金字塔下單資料:dict,
     flt_累計下跌百分比 = 0
     flt_最終價格=0
 
-    for key,value in dic_金字塔下單資料.items():        
+    for key,value in dic_金字塔下單資料.items():    
+        flt_百分比 = 0    
         # dic_金字塔下單資料_ret[key]["百分比"]= (dic_金字塔下單資料_ret[key]["金額"]/flt_一組金字塔的加總金額)*100
-        dic_金字塔下單資料_ret[key]["百分比"] = get本階投入資金百分比(flt_一組金字塔的加總金額,dic_金字塔下單資料_ret[key]["金額"])
+        
+        flt_百分比 = get本階投入資金百分比(flt_一組金字塔的加總金額,dic_金字塔下單資料_ret[key]["金額"])
+        dic_金字塔下單資料_ret[key]["百分比"] =  float("{:.2f}".format(flt_百分比))
 
-        flt_累計百分比 += dic_金字塔下單資料_ret[key]["百分比"]
-        dic_金字塔下單資料_ret[key]["累計百分比"]= flt_累計百分比
+        flt_累計百分比 += flt_百分比
+        # float("{:.2f}".format(13.949999999999999))
+        dic_金字塔下單資料_ret[key]["累計百分比"]= float("{:.2f}".format(flt_累計百分比))
         
         # 計算累計下跌百分比 : ((起始價格 - 本階價格)/起始價格)*100
         flt_累計下跌百分比 += get下跌百分比(flt_起始價格,dic_金字塔下單資料_ret[key]['價格'])
         # flt_累計下跌百分比 += ((flt_起始價格 - dic_金字塔下單資料_ret[key]['價格'])/flt_起始價格)*100
-        dic_金字塔下單資料_ret[key]["累計下跌百分比"]= flt_累計下跌百分比
+        dic_金字塔下單資料_ret[key]["累計下跌百分比"]= float("{:.2f}".format(flt_累計下跌百分比))
         flt_最終價格=dic_金字塔下單資料_ret[key]['價格']
 
     dic_金字塔下單資料_ret["最終價格"] = flt_最終價格
