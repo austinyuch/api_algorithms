@@ -42,7 +42,7 @@ def get_pyramid_arithmetic(
                     fltIncrementAmountMinimum:float, 
                     fltOrderAmountArithmeticParam:float, 
                     fltOrderAmountInit:float=1.0,
-                    toCsv:bool=False
+                    toCsv:bool=True
                 )->dict:    
     """
     等差金字塔 <br>
@@ -55,6 +55,7 @@ def get_pyramid_arithmetic(
       金字塔放大倍數 = 總預算 / dic_單位等差金字塔下單資料["總金額"] <br>
       本階單位數 = (起始單位數 + (下單數量等差參數 * i) ) * 金字塔放大倍數 e.g. 1 <br>
     :param fltOrderAmountInit=1.0:起始單位數 <br>
+    :param toCsv: 是否輸出csv檔案, 預設 true 為 輸出csv <br>
     :return: e.g.    	
     {
     "各階資料": [
@@ -141,7 +142,7 @@ def get_pyramid_geometric(
                     fltIncrementAmountMinimum:float, 
                     fltOrderAmountGeometicParam:float, 
                     fltOrderAmountInit:float=1.0,
-                    toCsv:bool=False
+                    toCsv:bool=True
                 )->dict:    
     """
     等比金字塔 <br>
@@ -152,6 +153,7 @@ def get_pyramid_geometric(
     :param fltIncrementAmountMinimum:最小增量 <br>
     :param fltOrderAmountGeometicParam:等比增量算式參數, e.g. 2倍 <br>
     :param fltOrderAmountInit=1.0:起始單位數 <br>
+    :param toCsv: 是否輸出csv檔案, 預設 true 為 輸出csv <br>
     :return: e.g.
         "各階資料": [{
             "1": {
