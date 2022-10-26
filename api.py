@@ -38,24 +38,24 @@ def get_pyramid_arithmetic(
                     fltBudget:float,
                     fltPriceInit:float, 
                     fltPriceFinal:float, 
-                    intTransactionTimes:int, 
-                    fltIncrementAmountMinimum:float, 
-                    fltOrderAmountArithmeticParam:float, 
+                    intTransactionTimes:int=10, 
+                    fltIncrementAmountMinimum:float=1.0, 
+                    fltOrderAmountArithmeticParam:float=2.0, 
                     fltOrderAmountInit:float=1.0,
                     toCsv:bool=True
                 )->dict:    
     """
     等差金字塔 <br>
     :param fltBudget:(下單)總預算 <br>
-    :param fltPriceInit:起始價格 <br>
-    :param fltPriceFinal:終止價格 <br>
-    :param intTransactionTimes:交易次數 <br>
-    :param fltIncrementAmountMinimum:最小增量 <br>
-    :param fltOrderAmountArithmeticParam: 下單數量等差參數, <br>
-      金字塔放大倍數 = 總預算 / dic_單位等差金字塔下單資料["總金額"] <br>
+    :param fltPriceInit:觸發股價(為規則開始計算的最高點, 並非開始買入的最高點股價),e.g. 0050股價 130 才開始觸發此條件<br>
+    :param fltPriceFinal:終止股價(最後買入的最低點股價),e.g. 0050股價 80 <br>
+    :param intTransactionTimes:預計交易次數(分成幾次下單),預設10次 <br>
+    :param fltIncrementAmountMinimum:最小單位(股),預設1(e.g.0.01股, 1股, 5股, or 1000股) <br>
+    :param fltOrderAmountArithmeticParam: 下單數量等差參數,預設2 <br>
+      金字塔放大倍數 = 總預算 / 單位等差金字塔下單資料["總金額"] <br>
       本階單位數 = (起始單位數 + (下單數量等差參數 * i) ) * 金字塔放大倍數 e.g. 1 <br>
-    :param fltOrderAmountInit=1.0:起始單位數 <br>
-    :param toCsv: 是否輸出csv檔案, 預設 true 為 輸出csv <br>
+    :param fltOrderAmountInit=1.0: 第一張單起始單位數,預設1股 <br>
+    :param toCsv: 是否輸出csv檔案, 預設 true 為 輸出csv (編碼為UTF-8;Excel預設開啟為Big5,請載入時自行調整) <br>
     :return: e.g.    	
     {
     "各階資料": [
@@ -138,22 +138,24 @@ def get_pyramid_geometric(
                     fltBudget:float,
                     fltPriceInit:float, 
                     fltPriceFinal:float, 
-                    intTransactionTimes:int, 
-                    fltIncrementAmountMinimum:float, 
-                    fltOrderAmountGeometicParam:float, 
+                    intTransactionTimes:int=10, 
+                    fltIncrementAmountMinimum:float=1.0, 
+                    fltOrderAmountGeometicParam:float=2.0, 
                     fltOrderAmountInit:float=1.0,
                     toCsv:bool=True
                 )->dict:    
     """
     等比金字塔 <br>
-    :param fltBudget:下單總預算 <br>
-    :param fltPriceInit:起始價格 <br>
-    :param fltPriceFinal:終止價格 <br>
-    :param intTransactionTimes:交易次數 <br>
-    :param fltIncrementAmountMinimum:最小增量 <br>
-    :param fltOrderAmountGeometicParam:等比增量算式參數, e.g. 2倍 <br>
-    :param fltOrderAmountInit=1.0:起始單位數 <br>
-    :param toCsv: 是否輸出csv檔案, 預設 true 為 輸出csv <br>
+    :param fltBudget:(下單)總預算 <br>
+    :param fltPriceInit:觸發股價(為規則開始計算的最高點, 並非開始買入的最高點股價),e.g. 0050股價 130 才開始觸發此條件<br>
+    :param fltPriceFinal:終止價格(最後買入的最低點股價),e.g. 0050股價 80 <br>
+    :param intTransactionTimes:預計交易次數(分成幾次下單),預設10次 <br>
+    :param fltIncrementAmountMinimum:最小單位(股),預設1(e.g.0.01股, 1股, 5股, or 1000股) <br>
+    :param fltOrderAmountGeometicParam:等比增量算式參數,預設2倍 <br>
+      金字塔放大倍數 = 總預算 / 單位等差金字塔下單資料["總金額"] <br>
+      本階單位數 = (起始單位數 * (下單數量等比參數^第i階次方) ) * 金字塔放大倍數 <br>
+    :param fltOrderAmountInit:起始單位數,預設1股 <br>
+    :param toCsv: 是否輸出csv檔案, 預設 true 為 輸出csv (編碼為UTF-8;Excel預設開啟為Big5,請載入時自行調整) <br>
     :return: e.g.
         "各階資料": [{
             "1": {
