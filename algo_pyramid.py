@@ -53,32 +53,32 @@ def etl_percentage(dic_金字塔下單資料:dict,
                 )->dict:
     
     dic_金字塔下單資料_ret = copy.deepcopy(dic_金字塔下單資料)
-    dic_金字塔下單資料_ret["總投入金額"] = flt_一組金字塔的加總金額
-    dic_金字塔下單資料_ret["起始價格"] = flt_起始價格
+
     flt_累計百分比 = 0
     flt_累計下跌百分比 = 0
     flt_最終價格=0
     flt_累計數量=0
-    
+    flt_累計投資金額=0
 
     # for key,value in dic_金字塔下單資料.items():  
     lst_results = []  
     for dic_階資料 in dic_金字塔下單資料['各階資料']:    
         dic_階資料_etl = copy.deepcopy(dic_階資料)
-        flt_百分比 = 0    
-        # dic_金字塔下單資料_ret[key]["百分比"]= (dic_金字塔下單資料_ret[key]["金額"]/flt_一組金字塔的加總金額)*100
-        
-        flt_百分比 = get本階投入資金百分比(flt_一組金字塔的加總金額,dic_階資料_etl["金額"])
+        flt_百分比 = 0                   
+        flt_百分比 = get本階投入資金百分比(flt_一組金字塔的加總金額,dic_階資料_etl["當次投資金額"])
         dic_階資料_etl["投入百分比"] =  float("{:.2f}".format(flt_百分比))
-
+        
         flt_累計百分比 += flt_百分比
         # float("{:.2f}".format(13.949999999999999))
         dic_階資料_etl["累計投入百分比"]= float("{:.2f}".format(flt_累計百分比))
-        
+
+        flt_累計投資金額 += dic_階資料_etl["當次投資金額"]
+        dic_階資料_etl["累計投資金額"] = float("{:.2f}".format(flt_累計投資金額))
+
         # 計算累計下跌百分比 : ((起始價格 - 本階價格)/起始價格)*100
         flt_累計下跌百分比 = get累計下跌百分比(flt_起始價格,dic_階資料_etl['價格'])
-        # flt_累計下跌百分比 += ((flt_起始價格 - dic_金字塔下單資料_ret[key]['價格'])/flt_起始價格)*100
-        dic_階資料_etl["累計下跌百分比"]= float("{:.2f}".format(flt_累計下跌百分比))
+        
+        dic_階資料_etl["股價跌幅(%)"]= float("{:.2f}".format(flt_累計下跌百分比))
         
         flt_累計數量 += dic_階資料_etl["單位數"]
         flt_最終價格 = dic_階資料_etl['價格']
@@ -86,12 +86,18 @@ def etl_percentage(dic_金字塔下單資料:dict,
         lst_results.append(dic_階資料_etl)
 
     dic_金字塔下單資料_ret['各階資料'] = lst_results
-    flt_平均成本 = dic_金字塔下單資料_ret["總投入金額"] / flt_累計數量        
+     
+    dic_金字塔下單資料_ret["起始價格"] = flt_起始價格     
     dic_金字塔下單資料_ret["最終價格"] = flt_最終價格
-    dic_金字塔下單資料_ret["累計下跌百分比"] = float("{:.2f}".format(flt_累計下跌百分比))
+    dic_金字塔下單資料_ret["股價跌幅(%)"] = float("{:.2f}".format(flt_累計下跌百分比))
+    
+    dic_金字塔下單資料_ret["總投入金額"] = flt_一組金字塔的加總金額
     dic_金字塔下單資料_ret["累計數量"]= float("{:.2f}".format(flt_累計數量))
+    
+    flt_平均成本 = flt_一組金字塔的加總金額/ flt_累計數量  
     dic_金字塔下單資料_ret["平均成本"] = float("{:.2f}".format(flt_平均成本))
-
+    
+    
     return dic_金字塔下單資料_ret
 
 
@@ -112,7 +118,8 @@ def get本階下單資料(lst_買入價格:list,
         "階": i+1,
         "價格":lst_買入價格[i],
         "單位數":flt_本階單位數,
-        "金額":flt_本階下單金額,
+        # "金額":flt_本階下單金額,
+        "當次投資金額":flt_本階下單金額,
     }
     
     return dic_本階下單資料
@@ -144,7 +151,7 @@ def get一組等差金字塔下單資料(flt_起始價格:float,
         # 階層數 = str(i + 1)
         # dic_單位等差金字塔下單資料[階層數] = dic_本階下單資料
         lst_results.append(dic_本階下單資料)
-        flt_一組金字塔的加總金額 += dic_本階下單資料["金額"]
+        flt_一組金字塔的加總金額 += dic_本階下單資料["當次投資金額"]
     
     # 處理各階層佔比    
     dic_單位等差金字塔下單資料['各階資料'] = lst_results
