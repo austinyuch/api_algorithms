@@ -44,7 +44,7 @@ def getLst買入價格(flt_起始價格:float,
 def get本階投入資金百分比(flt_一組金字塔的加總金額,flt_下單金額)->float:
     return (flt_下單金額/flt_一組金字塔的加總金額)*100
 
-def get下跌百分比(flt_起始價格,flt_當前價格)->float:
+def get累計下跌百分比(flt_起始價格,flt_當前價格)->float:
     return ((flt_起始價格 - flt_當前價格)/flt_起始價格)*100
 
 def etl_percentage(dic_金字塔下單資料:dict,
@@ -69,14 +69,14 @@ def etl_percentage(dic_金字塔下單資料:dict,
         # dic_金字塔下單資料_ret[key]["百分比"]= (dic_金字塔下單資料_ret[key]["金額"]/flt_一組金字塔的加總金額)*100
         
         flt_百分比 = get本階投入資金百分比(flt_一組金字塔的加總金額,dic_階資料_etl["金額"])
-        dic_階資料_etl["百分比"] =  float("{:.2f}".format(flt_百分比))
+        dic_階資料_etl["投入百分比"] =  float("{:.2f}".format(flt_百分比))
 
         flt_累計百分比 += flt_百分比
         # float("{:.2f}".format(13.949999999999999))
-        dic_階資料_etl["累計百分比"]= float("{:.2f}".format(flt_累計百分比))
+        dic_階資料_etl["累計投入百分比"]= float("{:.2f}".format(flt_累計百分比))
         
         # 計算累計下跌百分比 : ((起始價格 - 本階價格)/起始價格)*100
-        flt_累計下跌百分比 += get下跌百分比(flt_起始價格,dic_階資料_etl['價格'])
+        flt_累計下跌百分比 = get累計下跌百分比(flt_起始價格,dic_階資料_etl['價格'])
         # flt_累計下跌百分比 += ((flt_起始價格 - dic_金字塔下單資料_ret[key]['價格'])/flt_起始價格)*100
         dic_階資料_etl["累計下跌百分比"]= float("{:.2f}".format(flt_累計下跌百分比))
         
@@ -86,14 +86,12 @@ def etl_percentage(dic_金字塔下單資料:dict,
         lst_results.append(dic_階資料_etl)
 
     dic_金字塔下單資料_ret['各階資料'] = lst_results
-    flt_平均成本 = dic_金字塔下單資料_ret["總投入金額"] / flt_累計數量
-    dic_金字塔下單資料_ret["平均成本"] = float("{:.2f}".format(flt_平均成本))
-    dic_金字塔下單資料_ret["累計數量"]= float("{:.2f}".format(flt_累計數量))
-
+    flt_平均成本 = dic_金字塔下單資料_ret["總投入金額"] / flt_累計數量        
     dic_金字塔下單資料_ret["最終價格"] = flt_最終價格
+    dic_金字塔下單資料_ret["累計下跌百分比"] = float("{:.2f}".format(flt_累計下跌百分比))
+    dic_金字塔下單資料_ret["累計數量"]= float("{:.2f}".format(flt_累計數量))
+    dic_金字塔下單資料_ret["平均成本"] = float("{:.2f}".format(flt_平均成本))
 
-    dic_金字塔下單資料_ret["累計下跌百分比"] = flt_累計下跌百分比
-    
     return dic_金字塔下單資料_ret
 
 
@@ -264,18 +262,6 @@ def get買入等比金字塔(flt_總預算:float,
     
     return dic_等比金字塔下單資料
 
-if __name__ == "__main__":
-    lst_買入價格 = getLst買入價格(400,5,5)
-    flt_總預算 = float(100000) #float(input("請輸入總預算："))
-    flt_起始價格 = float(440) #float(input("請輸入起始金額："))
-    flt最終價格 = float(380) #float(input("請輸入最終金額："))
-    flt_最小增加數量 = float(1) #float(input("請輸入最小增加單位："))
-    flt_下單數量等差參數 = float(1) #float(input("請輸入下單數量等差參數：")) #前一階單位數 + 本接單位數 = 此階單位數  
-    flt_下單數量等比參數 = float(1.5) # float(input("請輸入下單數量等比參數：")) ＃前一階單位數*等比參數 = 此階單位數
-    int_交易次數 = int(6) # int(input("請輸入交易次數："))
-    dic_等差金字塔下單資料 = get買入等差金字塔(flt_總預算,flt_起始價格, flt最終價格, int_交易次數, flt_最小增加數量, flt_下單數量等差參數, flt_起始單位數=1)
-    dic_等比金字塔下單資料 = get買入等比金字塔(flt_總預算,flt_起始價格, flt最終價格, int_交易次數, flt_最小增加數量, flt_下單數量等比參數, flt_起始單位數=1)
-
 def getLocalTimestamp()->str:
     return datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 
@@ -330,3 +316,29 @@ def 金字塔資料轉csv(dic_data):
         the_file.write("\n")
 
     return path_file,fname
+
+
+
+
+if __name__ == "__main__":
+
+    dic_res = get買入等差金字塔(100000,
+                    130, 
+                    80,#flt最終價格:float, 
+                    10,#int_交易次數:int, 
+                    1,#flt_最小增加數量:float, 
+                    2,#flt_下單數量等差參數:float, 
+                    1#flt_起始單位數:float=1.0
+                    )
+    print(dic_res)
+
+    lst_買入價格 = getLst買入價格(400,5,5)
+    flt_總預算 = float(100000) #float(input("請輸入總預算："))
+    flt_起始價格 = float(440) #float(input("請輸入起始金額："))
+    flt最終價格 = float(380) #float(input("請輸入最終金額："))
+    flt_最小增加數量 = float(1) #float(input("請輸入最小增加單位："))
+    flt_下單數量等差參數 = float(1) #float(input("請輸入下單數量等差參數：")) #前一階單位數 + 本接單位數 = 此階單位數  
+    flt_下單數量等比參數 = float(1.5) # float(input("請輸入下單數量等比參數：")) ＃前一階單位數*等比參數 = 此階單位數
+    int_交易次數 = int(6) # int(input("請輸入交易次數："))
+    dic_等差金字塔下單資料 = get買入等差金字塔(flt_總預算,flt_起始價格, flt最終價格, int_交易次數, flt_最小增加數量, flt_下單數量等差參數, flt_起始單位數=1)
+    dic_等比金字塔下單資料 = get買入等比金字塔(flt_總預算,flt_起始價格, flt最終價格, int_交易次數, flt_最小增加數量, flt_下單數量等比參數, flt_起始單位數=1)
