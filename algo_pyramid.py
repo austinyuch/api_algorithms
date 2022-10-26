@@ -298,7 +298,8 @@ def 金字塔資料轉csv(dic_data):
         # 寫入header summary
 
 
-        str_header = '階,買入價格,單位數,金額,百分比,累計百分比,累計下跌百分比'
+        # str_header = '階,買入價格,單位數,當次投資金額,投入百分比,累計投入百分比,累計投資金額,股價跌幅'
+        str_header = 'Lv.,Unit Price,Amount,Sub. Total,Invest(%), Accu. Invest.(%),Accu. Invest. Total,Price Drop(%)'
         the_file.write(str_header)
         the_file.write("\n")
         # the_file.write('\n'.join(tokens))
@@ -312,12 +313,12 @@ def 金字塔資料轉csv(dic_data):
         the_file.write("\n")
         the_file.write("\n")
         str_summary = f"""   
-            ,,,,,總投入金額:,{dic_data["總投入金額"]}
-            ,,,,,平均成本:,{dic_data["平均成本"]}
-            ,,,,,累計數量:,{dic_data["累計數量"]}        
-            ,,,,,起始價格:,{dic_data["起始價格"]}       
-            ,,,,,最終價格:,{dic_data["最終價格"]}      
-            ,,,,,累計下跌百分比:,{dic_data["累計下跌百分比"]}    
+            ,,,,,Init. Price:,{dic_data["起始價格"]}       
+            ,,,,,Final Price:,{dic_data["最終價格"]} 
+            ,,,,,Price Drop(%):,{dic_data["股價跌幅(%)"]} 
+            ,,,,,Investment Total:,{dic_data["總投入金額"]}
+            ,,,,,Accumulated Amount:,{dic_data["累計數量"]}        
+            ,,,,,Average Cost:,{dic_data["平均成本"]}              
             """
         the_file.write(str_summary)
         the_file.write("\n")
