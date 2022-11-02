@@ -297,7 +297,7 @@ def 金字塔資料轉csv(dic_data):
         # writer = csv.writer(csvfile)
         # 寫入header summary
         # str_header = '階,買入價格,單位數,當次投資金額,投入百分比,累計投入百分比,累計投資金額,股價跌幅'
-        str_header = '"Lv.","Unit Price","Amount","Sub. Total","Invest.(%)","Accu. Invest.(%)","Accu. Invest. Total","Price Drop(%)"'
+        str_header = '"Lv.","Unit Price","Amount of Invest.","Sub. Total","Invest.(%)","Accu. Invest.(%)","Accu. Invest. Total","Price Drop(%)"'
         the_file.write(str_header)
         the_file.write("\n")
         # the_file.write('\n'.join(tokens))
