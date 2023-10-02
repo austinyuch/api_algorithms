@@ -26,7 +26,7 @@ if __name__ == "__main__":
             workers=cfg.dic_api["workers"],
             log_level=cfg.dic_api["log_level"],
             reload=cfg.dic_api["reload"],
-            debug=cfg.dic_api["debug"]
+            # debug=cfg.dic_api["debug"]
         )
     except KeyboardInterrupt:
         print(f'\nExiting\n')
