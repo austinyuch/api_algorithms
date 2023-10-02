@@ -2,12 +2,13 @@
 name = "repl_python3_apialgorithms"
 version = "0.1.0"
 description = ""
-authors = ["YuehChengChang <<>>"]
+authors = ["YuehChengChang <<ycchang.pmp@gmail.com>>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-fastapi = "^0.78.0"
-uvicorn = "^0.18.2"
+python = ">=3.9,<3.10"
+fastapi = "^0.103.2"
+uvicorn = "^0.23.2"
+
 
 [tool.poetry.dev-dependencies]
 

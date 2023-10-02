@@ -1,4 +1,6 @@
 venv
+.venv
 __pycache__
 logs/*
 temp_files/*
+poetry.lock
