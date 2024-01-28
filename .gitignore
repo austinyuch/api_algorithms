@@ -1,5 +1,7 @@
 venv
 .venv
+.pyenv
+.python-version
 __pycache__
 logs/*
 temp_files/*
