@@ -1,3 +1,5 @@
+from pathlib import Path
+
 dic_api = {
     "site_name":"API Algorithms", 
     "description":"Algorithms Service",
@@ -14,7 +16,7 @@ dic_api = {
     }
 GLOBAL_LOG_LEVEL="INFO"
 lst_origins=["*"]
-from pathlib import Path
-PATH_PRJ = Path(__file__).resolve().parents[0]
-PATH_LOG_FOLDER = PATH_PRJ.joinpath("logs")
+
+PATH_SRC = Path(__file__).resolve().parents[0]
+PATH_LOG_FOLDER = PATH_SRC.joinpath("logs")
 LOG_BACKUP_COUNT = 14
