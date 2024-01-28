@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "repl_python3_apialgorithms"
+name = "invest_algorithms"
 version = "0.1.0"
 description = ""
 authors = ["YuehChengChang <<ycchang.pmp@gmail.com>>"]
@@ -10,7 +10,10 @@ fastapi = "^0.103.2"
 uvicorn = "^0.23.2"
 
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+pytest-mock = "^3.12.0"
+jupyterlab = "^4.0.11"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
