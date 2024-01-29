@@ -223,7 +223,7 @@ def get一組等比金字塔下單資料(flt_起始價格:float,
         # dic_單位等比金字塔下單資料[階層數] = dic_本階下單資料 
 
         lst_results.append(dic_本階下單資料)            
-        flt_一組金字塔的加總金額 += dic_本階下單資料["金額"]
+        flt_一組金字塔的加總金額 += dic_本階下單資料["當次投資金額"]
     
     # 處理各階層佔比    
     dic_單位等比金字塔下單資料['各階資料'] = lst_results
@@ -328,23 +328,24 @@ def 金字塔資料轉csv(dic_data):
 
 if __name__ == "__main__":
 
-    dic_res = get買入等差金字塔(100000,
-                    130, 
-                    80,#flt最終價格:float, 
-                    10,#int_交易次數:int, 
-                    1,#flt_最小增加數量:float, 
-                    2,#flt_下單數量等差參數:float, 
-                    1#flt_起始單位數:float=1.0
-                    )
-    print(dic_res)
+    # dic_res = get買入等差金字塔(100000,
+    #                 130, 
+    #                 80,#flt最終價格:float, 
+    #                 10,#int_交易次數:int, 
+    #                 1,#flt_最小增加數量:float, 
+    #                 2,#flt_下單數量等差參數:float, 
+    #                 1#flt_起始單位數:float=1.0
+    #                 )
+    # print(dic_res)
 
-    lst_買入價格 = getLst買入價格(400,5,5)
-    flt_總預算 = float(100000) #float(input("請輸入總預算："))
-    flt_起始價格 = float(440) #float(input("請輸入起始金額："))
-    flt最終價格 = float(380) #float(input("請輸入最終金額："))
-    flt_最小增加數量 = float(1) #float(input("請輸入最小增加單位："))
-    flt_下單數量等差參數 = float(1) #float(input("請輸入下單數量等差參數：")) #前一階單位數 + 本接單位數 = 此階單位數  
-    flt_下單數量等比參數 = float(1.5) # float(input("請輸入下單數量等比參數：")) ＃前一階單位數*等比參數 = 此階單位數
-    int_交易次數 = int(6) # int(input("請輸入交易次數："))
-    dic_等差金字塔下單資料 = get買入等差金字塔(flt_總預算,flt_起始價格, flt最終價格, int_交易次數, flt_最小增加數量, flt_下單數量等差參數, flt_起始單位數=1)
-    dic_等比金字塔下單資料 = get買入等比金字塔(flt_總預算,flt_起始價格, flt最終價格, int_交易次數, flt_最小增加數量, flt_下單數量等比參數, flt_起始單位數=1)
+    # lst_買入價格 = getLst買入價格(400,5,5)
+    # flt_總預算 = float(100000) #float(input("請輸入總預算："))
+    # flt_起始價格 = float(440) #float(input("請輸入起始金額："))
+    # flt最終價格 = float(380) #float(input("請輸入最終金額："))
+    # flt_最小增加數量 = float(1) #float(input("請輸入最小增加單位："))
+    # flt_下單數量等差參數 = float(1) #float(input("請輸入下單數量等差參數：")) #前一階單位數 + 本接單位數 = 此階單位數  
+    # flt_下單數量等比參數 = float(1.5) # float(input("請輸入下單數量等比參數：")) ＃前一階單位數*等比參數 = 此階單位數
+    # int_交易次數 = int(6) # int(input("請輸入交易次數："))
+    # dic_等差金字塔下單資料 = get買入等差金字塔(flt_總預算,flt_起始價格, flt最終價格, int_交易次數, flt_最小增加數量, flt_下單數量等差參數, flt_起始單位數=1)
+    # dic_等比金字塔下單資料 = get買入等比金字塔(flt_總預算,flt_起始價格, flt最終價格, int_交易次數, flt_最小增加數量, flt_下單數量等比參數, flt_起始單位數=1)
+    pass
